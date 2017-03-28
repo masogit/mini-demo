@@ -1,5 +1,6 @@
 {
   "pages": [
+    "cmms/index",
     "example/index",
 
     "example/button/button",
@@ -35,7 +36,7 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "WeUI for 小程序",
+    "navigationBarTitleText": "设备报修小程序",
     "navigationBarBackgroundColor": "#f8f8f8",
     "backgroundColor": "#f8f8f8"
   },

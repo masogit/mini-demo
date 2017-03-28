@@ -1,6 +1,6 @@
 <view class="page">
     <view class="page__hd">
-        <view class="page__title">APM</view>
+        <view class="page__title">Mini CMMS</view>
         <view class="page__desc">提供一个设备建档, 报修的微信小程序</view>
     </view>
     <view class="page__bd page__bd_spacing">

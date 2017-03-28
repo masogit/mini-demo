@@ -1,7 +1,5 @@
 App({
-    onLaunch: function () {
-        console.log('App Launch')
-    },
+    onLaunch: () => console.log('test es6'),
     onShow: function () {
         console.log('App Show')
     },
