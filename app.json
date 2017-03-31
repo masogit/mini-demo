@@ -1,6 +1,9 @@
 {
   "pages": [
     "cmms/index",
+    "cmms/device/create/index",
+    "cmms/device/detail/index",
+    "cmms/device/list/index",
     "example/index",
 
     "example/button/button",
@@ -36,7 +39,7 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "设备报修小程序",
+    "navigationBarTitleText": "小程序",
     "navigationBarBackgroundColor": "#f8f8f8",
     "backgroundColor": "#f8f8f8"
   },

@@ -5,7 +5,11 @@ Page({
                 id: 'form',
                 name: '设备管理',
                 open: false,
-                pages: ['扫码建档', '扫码查看', '设备查询']
+                pages: [
+                    { key: '扫码建档', page: 'device/create/index' }, 
+                    { key: '扫码查看', page: 'device/detail/index' },
+                    { key: '设备查询', page: 'device/list/index' }
+                ]
             },
             {
                 id: 'widget',
