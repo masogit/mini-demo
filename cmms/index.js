@@ -1,3 +1,5 @@
+import { scan } from '../actions/wx'
+
 Page({
     data: {
         list: [

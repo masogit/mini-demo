@@ -2,19 +2,22 @@
   <view class="page-body">
     <view class="page-section">
       <view class="page-body-info">
-
-        <block wx:if="{{imageSrc}}">
-          <image src="{{imageSrc}}" class="image" mode="aspectFit"></image>
-        </block>
-
-        <block wx:else>
-          <view class="image-plus image-plus-nb" bindtap="chooseImage">
-            <view class="image-plus-horizontal"></view>
-            <view class="image-plus-vertical"></view>
-          </view>
-          <view class="image-plus-text">选择图片</view>
-        </block>
-
+        <button bindtap="eventPost">{{btnlabel}}</button>
+        <text>{{text}}</text>
+      </view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg"
+              wx:for-items="{{sites}}"
+              wx:for-item="site"
+              wx:key="*.site">
+            <view class="weui-media-box__title">{{site.aliasName}}</view>
+            <view class="weui-media-box__desc">
+              {{site.contactEmail}}
+              {{site.contactPerson}}
+              {{site.contactPhone}}
+              {{site.location}}
+            </view>
+        </view>
       </view>
     </view>
   </view>
