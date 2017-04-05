@@ -7,6 +7,7 @@ App({
         console.log('App Hide')
     },
     globalData: {
+        username: '',
         hasLogin: false
     }
 });

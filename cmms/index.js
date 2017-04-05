@@ -1,7 +1,8 @@
 import { scan } from '../actions/wx'
-
+const app = getApp()
 Page({
     data: {
+        username: app.globalData.username,
         list: [
             {
                 id: 'form',
