@@ -3,9 +3,6 @@
     <view class="page-section">
       <view class="page-body-info">
         <button bindtap="onShow">扫码</button>
-      </view>
-      <view class="page-body-info">
-        <button bindtap="eventPost">{{btnlabel}}</button>
         <text>{{text}}</text>
       </view>
       <view class="weui-panel__bd">

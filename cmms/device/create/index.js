@@ -3,6 +3,7 @@ import { scan } from '../../../actions/native'
 Page({
   data:{
     btnlabel: 'Load',
+    qrCode: '',
     text: '',
     sites: []
   },
@@ -59,9 +60,14 @@ Page({
     this.setData({ text: 'Scanning...' })
     wx.scanCode({
       success: res => {
-        console.log(res)
+        if (res.errMsg === "scanCode:ok" && res.scanType === 'QR_CODE' && res.result)
         this.setData({
-          text: JSON.stringify(res)
+          qrCode: JSON.stringify(res.result)
+        })
+        wx.showToast({
+            title: `QR code: ${res.result}`,
+            icon: 'success',
+            duration: 1000
         })
       },
       fail: res => {
