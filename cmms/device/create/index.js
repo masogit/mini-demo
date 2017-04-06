@@ -51,12 +51,26 @@ Page({
       }
     })
   },
-  onLoad: scan,
+  onLoad: () => {},
   onReady:function(){
     // 页面渲染完成
   },
-  onShow:function(){
-    // 页面显示
+  onShow: function() {
+    this.setData({ text: 'Scanning...' })
+    wx.scanCode({
+      success: res => {
+        console.log(res)
+        this.setData({
+          text: JSON.stringify(res)
+        })
+      },
+      fail: res => {
+        this.setData({ text: 'fail!' })
+      },
+      complete: res => {
+        this.setData({ text: 'complete!' })
+      }
+    })
   },
   onHide:function(){
     // 页面隐藏

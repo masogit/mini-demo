@@ -20,19 +20,36 @@ function scan() {
   }
 
 function navigate(page, title) {
-  wx.showToast({
-      title: title,
-      icon: 'success',
-      duration: 3000,
-      success: () => {
-          wx.navigateTo({
-              url: page
-          })
-      }
+  const showToast = wxPromisify(wx.showToast)
+  showToast({
+    title: title,
+    icon: 'success',
+    duration: 3000,
+  }).then(() => {
+    wx.navigateTo({
+        url: page
+    })
   })
 }
 
+function wxPromisify(fn) {  
+  return function (obj = {}) {    
+    return new Promise((resolve, reject) => {      
+      obj.success = function (res) {        
+        resolve(res)      
+      }      
+
+      obj.fail = function (res) {        
+        reject(res)      
+      }      
+
+      fn(obj)    
+    })  
+  }
+}
+
 export {
+    wxPromisify,
     navigate,
     scan
 }
