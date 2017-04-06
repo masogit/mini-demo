@@ -1,4 +1,4 @@
-import { scan } from '../actions/wx'
+import { scan } from '../actions/native'
 const app = getApp()
 Page({
     data: {

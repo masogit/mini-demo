@@ -19,6 +19,20 @@ function scan() {
     })
   }
 
+function navigate(page, title) {
+  wx.showToast({
+      title: title,
+      icon: 'success',
+      duration: 3000,
+      success: () => {
+          wx.navigateTo({
+              url: page
+          })
+      }
+  })
+}
+
 export {
+    navigate,
     scan
 }

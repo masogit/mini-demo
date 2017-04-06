@@ -1,26 +1,32 @@
-import { rest } from '../../../actions/index'
+import { rest, native } from '../../../actions/index'
+import { urls } from '../../../constants/index'
+
 Page({
-  data:{
-    login_name: 'admin',
-    password: 'admin',
-    rememberMe: true
-  },
+  data:{},
   Login: (e) => {
     const data = {
       login_name: e.detail.value.login_name,
-      password: e.detail.value.password,
-      rememberMe: true
+      password: e.detail.value.password
     }
-    rest.post({
-      header: { 'Content-Type': 'application/json'},
+    rest.request({
       method: 'POST',
-      url: 'http://120.132.8.152:8090/api/apm/security/userAccounts/authenticateBasic',
+      url: urls.basicAuth,
       data,
       success: res => {
-        rest.setToken(res)
-        let app = getApp()
-        console.log(app)
-        app.globalData.username = data.login_name
+        if (res.errMsg === "request:ok" && res.statusCode === 200) {
+          if (res.data && res.data.bizStatusCode === "OK") {
+            if (res.data.data && res.data.data.id_token) {
+              rest.setToken(res.data.data.id_token)
+              native.navigate('/cmms/index', `登录成功! ${res.data.message}`)
+            }
+          }
+        } else {
+            wx.showToast({
+                title: `${res.data.message}`,
+                icon: 'fail',
+                duration: 3000
+            })
+        }
       }
     })
   },
@@ -28,13 +34,24 @@ Page({
     console.log(e)
   },
   onLoad:function(options){
-    // 页面初始化 options为页面跳转所带来的参数
   },
   onReady:function(){
     // 页面渲染完成
   },
   onShow:function(){
-    // 页面显示
+    wx.login({
+      success: res => {
+        if (res.errMsg === "login:ok" && res.code)
+        rest.request({
+          method: 'GET',
+          url: urls.weChatBinding + '/' + res.code,
+          success: res => {
+            native.navigate('/cmms/index', `登录成功! ${res.code}`)
+          },
+          fail: (err) => console.log(err)
+        })
+      }
+    })
   },
   onHide:function(){
     // 页面隐藏

@@ -1,5 +1,5 @@
 // cmms/device/create/index.js
-import { scan } from '../../../actions/wx'
+import { scan } from '../../../actions/native'
 Page({
   data:{
     btnlabel: 'Load',
