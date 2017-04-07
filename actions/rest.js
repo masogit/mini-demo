@@ -9,6 +9,10 @@ class REST {
         this.header.Authentication = token
     }
 
+    error() {
+
+    }
+    
     request(param) {
         param.header = this.header
         wx.request({
@@ -18,6 +22,7 @@ class REST {
             data: param.data,
             success: (res) => {
                 switch(res.statusCode) {
+                    case 400: param.fail('Bad Request'); break
                     case 401: param.fail('Unauthorized'); break
                     case 403: param.fail('Forbidden'); break
                     case 404: param.fail('Not Found'); break

@@ -1,8 +1,7 @@
 import { scan } from '../actions/native'
-const app = getApp()
 Page({
     data: {
-        username: app.globalData.username,
+        userInfo: null,
         list: [
             {
                 id: 'form',
@@ -30,7 +29,9 @@ Page({
                 id: 'nav',
                 name: '系统管理',
                 open: false,
-                pages: ['加入组织', '创建新组织']
+                pages: [
+                    { key: '绑定用户', page: '/cmms/user/login/index' }
+                ]
             },
         ]
     },
@@ -46,5 +47,12 @@ Page({
         this.setData({
             list: list
         });
+    },
+    onShow: function() {
+        var that = this
+        const app = getApp()
+        that.setData({
+            userInfo: app.globalData.userInfo
+        })
     }
 });

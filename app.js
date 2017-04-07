@@ -1,13 +1,16 @@
+import { rest, native } from './actions/index'
+import { urls } from './constants/index'
+
 App({
-    onLaunch: () => console.log('test es6'),
+    onLaunch: () => console.log('app start...'),
     onShow: function () {
-        console.log('App Show')
     },
     onHide: function () {
         console.log('App Hide')
     },
     globalData: {
-        username: '',
-        hasLogin: false
+        userInfo: null,
+        weChatId: null,
+        text: ''
     }
 });

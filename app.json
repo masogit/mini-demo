@@ -1,7 +1,8 @@
 {
   "pages": [
-    "cmms/user/login/index",
+    "cmms/about/index",
     "cmms/index",
+    "cmms/user/login/index",
     "cmms/device/create/index",
     "cmms/device/detail/index",
     "cmms/device/list/index"
