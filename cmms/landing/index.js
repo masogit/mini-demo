@@ -39,7 +39,7 @@ Page({
         // Auth in APM
         if (res.errMsg === "login:ok" && res.code) {
 
-            rest.go({ method: 'GET', url: urls.weixin + res.code })
+            rest.go({ method: 'GET', url: urls.getOpenId + res.code })
                 .then(
                   res => {
 
@@ -60,7 +60,12 @@ Page({
                   }, (err) => wx.redirectTo({ url: '/cmms/user/login/index' })
 
                 ).then(
-                    (res) => wx.redirectTo({ url: '/cmms/index' }), 
+                    (res) => {
+                      if (res.data && res.data.data && res.data.data.loginName){
+                        app.globalData.loginName = res.data.data.loginName
+                      }
+                      // wx.redirectTo({ url: '/cmms/index' })
+                    }, 
                     (err) => { console.log(err); wx.redirectTo({ url: '/cmms/user/login/index' }) }
                 )
 

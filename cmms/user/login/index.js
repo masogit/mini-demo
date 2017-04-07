@@ -1,6 +1,7 @@
 import { rest, native } from '../../../actions/index'
 import { urls } from '../../../constants/index'
 
+const app = getApp()
 Page({
   data:{
     userInfo: null,
@@ -19,22 +20,24 @@ Page({
       method: 'POST',
       url: urls.weChatBinding,
       data
-    }).then(res => {
+    })
+    .then(res => {
 
         if (res.data && res.data.bizStatusCode === "OK") {
           if (res.data.data && res.data.data.id_token) {
 
             rest.setToken(res.data.data.id_token)
+            if (res.data && res.data.data && res.data.data.loginName){
+              app.globalData.loginName = res.data.data.loginName
+            }
             native.navigate('/cmms/index', `绑定成功! ${res.data.message}`)
 
           }
         }
 
     }, err => {
-
         wx.showToast({
-            title: `绑定失败!`,
-            icon: 'fail',
+            title: `绑定失败! ${err}`,
             duration: 3000
         })
     })
@@ -47,7 +50,8 @@ Page({
   onShow:function(){
     const app = getApp()
     this.setData({
-      userInfo: app.globalData.userInfo
+      userInfo: app.globalData.userInfo,
+      loginName: app.globalData.loginName
     })
   },
   onHide:function(){

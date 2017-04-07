@@ -1,10 +1,17 @@
 <!--cmms/device/create/index.wxml-->
   <view class="page-body">
-    <view class="page-section">
-      <view class="page-body-info">
-        <button bindtap="onShow">扫码</button>
-        <text>{{text}}</text>
+
+      <view class="weui-cells__title">扫码结果: {{status}}</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">{{qrCode}}</view>
+        </view>
       </view>
+      
+      <view class="weui-btn-area">
+          <button class="weui-btn" type="primary" form-type="submit" bindtap="onShow">扫码</button>
+      </view>
+    <view class="page-section">
       <view class="weui-panel__bd">
         <view class="weui-media-box__bd weui-media-box__bd_in-appmsg"
               wx:for-items="{{sites}}"

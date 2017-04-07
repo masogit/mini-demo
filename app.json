@@ -1,6 +1,6 @@
 {
   "pages": [
-    "cmms/about/index",
+    "cmms/landing/index",
     "cmms/index",
     "cmms/user/login/index",
     "cmms/device/create/index",

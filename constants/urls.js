@@ -9,6 +9,7 @@ Object.keys(urls).forEach(key => urls[key] = server + urls[key])
 
 const secret = '676e03def70993db84044d2a16d2ab50'
 const appid = 'wx93fa500d8d386dcc'
-urls.weixin = `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&grant_type=authorization_code&js_code=`
+
+urls.getOpenId = `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&grant_type=authorization_code&js_code=`
 
 export default urls

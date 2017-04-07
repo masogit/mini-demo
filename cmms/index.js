@@ -8,9 +8,9 @@ Page({
                 name: '设备管理',
                 open: false,
                 pages: [
-                    { key: '扫码建档', page: 'device/create/index' }, 
-                    { key: '扫码查看', page: 'device/detail/index' },
-                    { key: '设备查询', page: 'device/list/index' }
+                    { key: '扫码建档', page: '/cmms/device/create/index' }, 
+                    { key: '扫码查看', page: '/cmms/device/detail/index' },
+                    { key: '设备查询', page: '/cmms/device/list/index' }
                 ]
             },
             {

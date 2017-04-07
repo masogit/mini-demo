@@ -9,21 +9,19 @@
         <view wx:if="{{userInfo}}" class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">微信信息</view>
+                    <view class="weui-label">微信</view>
                 </view>
-                <view class="weui-cell__bd">
-                    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+                <view class="weui-cell__bd userinfo">
                     {{userInfo.nickName}}
-                    {{userInfo.city}}
-                    {{userInfo.province}}
+                    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
                 </view>
             </view>
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
-                    <view class="weui-label">APM用户</view>
+                    <view class="weui-label">用户</view>
                 </view>
                 <view class="weui-cell__bd">
-                    {{userInfo.nickName}}
+                    {{loginName}}
                 </view>
             </view>
         </view>

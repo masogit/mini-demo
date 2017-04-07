@@ -11,6 +11,6 @@ App({
     globalData: {
         userInfo: null,
         weChatId: null,
-        text: ''
+        loginName: null
     }
 });

@@ -19,6 +19,9 @@ class REST {
                 url: param.url,
                 data: param.data,
                 success: (res) => {
+                    console.log('request response... :')
+                    console.log(res)
+
                     switch(res.statusCode) {
                         case 400: reject('Bad Request'); break
                         case 401: reject('Unauthorized'); break

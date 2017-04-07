@@ -4,25 +4,25 @@ Page({
   data:{
     btnlabel: 'Load',
     qrCode: '',
-    text: '',
+    status: '',
     sites: []
   },
   eventScan: function() {
-    this.setData({ text: 'Scanning...' })
+    this.setData({ status: 'Scanning...' })
     wx.scanCode({
       success: (res) => {
         this.setData({
-          text: JSON.stringify(res)
+          status: JSON.stringify(res)
         })
       },
       fail: (res) => {
         this.setData({
-          text: JSON.stringify(res)
+          status: JSON.stringify(res)
         })
       },
       complete: (res) => {
         this.setData({
-          text: JSON.stringify(res)
+          status: JSON.stringify(res)
         })
       }
     })
@@ -40,7 +40,7 @@ Page({
         console.log(res)
         this.setData({
           sites: res.data,
-          text: '',
+          status: '',
           btnlabel: 'Load'
         })
       },
@@ -57,12 +57,12 @@ Page({
     // 页面渲染完成
   },
   onShow: function() {
-    this.setData({ text: 'Scanning...' })
+    this.setData({ status: 'Scanning...' })
     wx.scanCode({
       success: res => {
         if (res.errMsg === "scanCode:ok" && res.scanType === 'QR_CODE' && res.result)
         this.setData({
-          qrCode: JSON.stringify(res.result)
+          qrCode: res.result
         })
         wx.showToast({
             title: `QR code: ${res.result}`,
@@ -71,10 +71,10 @@ Page({
         })
       },
       fail: res => {
-        this.setData({ text: 'fail!' })
+        this.setData({ status: 'fail!' })
       },
       complete: res => {
-        this.setData({ text: 'complete!' })
+        this.setData({ status: 'complete!' })
       }
     })
   },
