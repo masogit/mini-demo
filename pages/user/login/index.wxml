@@ -1,0 +1,63 @@
+<import src="../../../templates/layout.wxml" />
+
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+    <form bindsubmit="Login">
+        <template is="header_large" data="{{title:'资产云管家', subTitle: '一个设备建档及报修小程序'}}"/>
+
+        <view wx:if="{{loginName}}" class="weui-cells__title">已绑定用户信息</view>
+        <view wx:if="{{loginName}}" class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">微信</view>
+                </view>
+                <view class="weui-cell__bd userinfo">
+                    {{userInfo.nickName}}
+                    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户</view>
+                </view>
+                <view class="weui-cell__bd">
+                    {{loginName}}
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">用户绑定</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户名</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name="login_name" class="weui-input" placeholder="请输入用户名"/>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">密码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name="password" type="password" class="weui-input" placeholder="请输入密码"/>
+                </view>
+            </view>
+            <!--<view class="weui-cell weui-cell_input weui-cell_vcode">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">验证码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入验证码" />
+                </view>
+                <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn">获取验证码</view>
+                </view>
+            </view>-->
+        </view>
+
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" form-type="submit">绑定用户</button>
+        </view>
+    </form>
+</view>

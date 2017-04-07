@@ -1,15 +1,15 @@
 {
   "pages": [
-    "cmms/landing/index",
-    "cmms/index",
-    "cmms/user/login/index",
-    "cmms/device/create/index",
-    "cmms/device/detail/index",
-    "cmms/device/list/index"
+    "pages/landing/index",
+    "pages/index",
+    "pages/user/login/index",
+    "pages/device/create/index",
+    "pages/device/detail/index",
+    "pages/device/list/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "小程序",
+    "navigationBarTitleText": "小程序(GE-HC-APM)",
     "navigationBarBackgroundColor": "#f8f8f8",
     "backgroundColor": "#f8f8f8"
   },

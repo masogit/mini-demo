@@ -1,0 +1,6 @@
+<template name="header_large">
+    <view class="page__hd">
+        <view class="page__title">{{title}}</view>
+        <view class="page__desc">{{subTitle}}</view>
+    </view>
+</template>
