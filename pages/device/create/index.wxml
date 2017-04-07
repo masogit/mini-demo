@@ -2,29 +2,38 @@
   <view class="page-body">
 
       <view class="weui-cells__title">扫码结果: {{status}}</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell">
-          <view class="weui-cell__bd">{{qrCode}}</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">{{qrCode}}</view>
+          </view>
         </view>
-      </view>
       
       <view class="weui-btn-area">
           <button class="weui-btn" type="primary" form-type="submit" bindtap="onShow">扫码</button>
       </view>
-    <view class="page-section">
-      <view class="weui-panel__bd">
-        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg"
-              wx:for-items="{{sites}}"
-              wx:for-item="site"
-              wx:key="*.site">
-            <view class="weui-media-box__title">{{site.aliasName}}</view>
-            <view class="weui-media-box__desc">
-              {{site.contactEmail}}
-              {{site.contactPerson}}
-              {{site.contactPhone}}
-              {{site.location}}
-            </view>
-        </view>
+
+      <view class="weui-cells__title">
+          上传图片: {{imageList.length}}/{{count[countIndex]}}
       </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <block wx:for="{{imageList}}" wx:for-item="image" wx:key="*pic">
+                      <view class="weui-uploader__file">
+                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                      </view>
+                    </block>
+                  </view>
+                  <view class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+
     </view>
   </view>
