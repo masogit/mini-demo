@@ -9,34 +9,34 @@ class REST {
         this.header.Authentication = token
     }
 
-    error() {
+    go(param) {
+        return new Promise((resolve, reject) => {
 
-    }
-    
-    request(param) {
-        param.header = this.header
-        wx.request({
-            header: param.header,
-            method: param.method,
-            url: param.url,
-            data: param.data,
-            success: (res) => {
-                switch(res.statusCode) {
-                    case 400: param.fail('Bad Request'); break
-                    case 401: param.fail('Unauthorized'); break
-                    case 403: param.fail('Forbidden'); break
-                    case 404: param.fail('Not Found'); break
-                    case 500: param.fail('Server error'); break
-                    case 200: param.success(res); break
-                    default: param.fail(res.statusCode); 
+            param.header = this.header
+            wx.request({
+                header: param.header,
+                method: param.method,
+                url: param.url,
+                data: param.data,
+                success: (res) => {
+                    switch(res.statusCode) {
+                        case 400: reject('Bad Request'); break
+                        case 401: reject('Unauthorized'); break
+                        case 403: reject('Forbidden'); break
+                        case 404: reject('Not Found'); break
+                        case 500: reject('Server error'); break
+                        case 200: resolve(res); break
+                        default: reject(res.statusCode); 
+                    }
+                },
+                fail: (err) => {
+                    reject(err)
+                },
+                complete: () => {
+                    console.log('request complete... param:')
+                    console.log(param)
                 }
-            },
-            fail: (err) => {
-                console.log(err)
-            },
-            complete: () => {
-                console.log('request complete...')
-            }
+            })    
         })
     }
 

@@ -26,9 +26,7 @@ function navigate(page, title) {
     icon: 'success',
     duration: 3000,
   }).then(() => {
-    wx.navigateTo({
-        url: page
-    })
+    wx.navigateTo({ url: page })
   })
 }
 

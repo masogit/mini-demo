@@ -12,8 +12,9 @@
                     <view class="weui-label">微信信息</view>
                 </view>
                 <view class="weui-cell__bd">
-                    {{userInfo.nickName}}<br />
-                    {{userInfo.city}}<br />
+                    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+                    {{userInfo.nickName}}
+                    {{userInfo.city}}
                     {{userInfo.province}}
                 </view>
             </view>

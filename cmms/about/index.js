@@ -8,14 +8,25 @@ Page({
     userInfo: {},
     status: ''
   },
+
+  setStatus(msg) {
+    console.log(msg)
+    this.setData({
+      status: msg
+    })
+  },
+
   onLoad: function () {
     var that = this
+
     wx.login({
     success: res => {
+
         // Login WX success and get User Info
+        that.setStatus('wx login success')
         wx.getUserInfo({
             success: function (res) {
-                console.log(res.userInfo)
+                that.setStatus('got userInfo: ' + res.userInfo)
 
                 var app = getApp()
                 app.globalData.userInfo = res.userInfo
@@ -27,36 +38,31 @@ Page({
 
         // Auth in APM
         if (res.errMsg === "login:ok" && res.code) {
-          // get wechat open_id
-            rest.request({
-                method: 'GET',
-                url: urls.weixin + res.code,
-                success: res => {
-                  if (res.statusCode ===200 && res.data && res.data.openid) {
-                    var app = getApp()
-                    app.globalData.weChatId = res.data.openid
 
-                    rest.request({
-                        method: 'POST',
-                        url: urls.weChatAuth,
-                        data: {
-                            "weChatId": res.data.openid
-                        },
-                        success: res => {
-                            wx.redirectTo({ url: '/cmms/index' })
-                        },
-                        fail: (err) => {
-                            console.log(err)
-                            wx.redirectTo({ url: '/cmms/user/login/index' })
-                        }
-                    })
-                  }
-                },
-                fail: (err) => {
-                    console.log(err)
-                    // wx.redirectTo({ url: '/cmms/user/login/index' })
-                }
-            })
+            rest.go({ method: 'GET', url: urls.weixin + res.code })
+                .then(
+                  res => {
+
+                    const openid = res.data.openid
+                    var app = getApp()
+                    app.globalData.weChatId = openid
+
+                    const param = {
+                      method: 'POST',
+                      url: urls.weChatAuth,
+                      data: {
+                          "weChatId": openid
+                      }
+                    }
+
+                    return rest.go(param) 
+
+                  }, (err) => wx.redirectTo({ url: '/cmms/user/login/index' })
+
+                ).then(
+                    (res) => wx.redirectTo({ url: '/cmms/index' }), 
+                    (err) => { console.log(err); wx.redirectTo({ url: '/cmms/user/login/index' }) }
+                )
 
         }
     }
