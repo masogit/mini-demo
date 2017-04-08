@@ -1,3 +1,5 @@
+import { native, rest } from '../../../actions/index'
+import { urls } from '../../../constants/index'
 Page({
   data:{
     imageList: [],
@@ -47,10 +49,39 @@ Page({
   previewImage(e) {
     var current = e.target.dataset.src
 
-    wx.previewImage({
+    native.wxPromisify(wx.previewImage)({
       current: current,
       urls: this.data.imageList
+    }).then()
+  },
+  uploadImages() {
+    let promises = []
+    const isFile = true
+    const token = getApp().globalData.token
+    this.data.imageList.forEach(path => {
+    //   rest.go({
+    //     url: urls.objSingle,
+    //     filePath: path,
+    //     name:'file',
+    //   }, wx.uploadFile)
+    //   .then(
+    //     res => console.log(res), 
+    //     err => console.log(err)
+    //   )
+    // })
+      promises.push(
+        rest.go({
+          url: urls.objSingle,
+          filePath: path,
+          name: 'file',
+        }, wx.uploadFile)
+      )
     })
+
+    Promise.all(promises).then(
+      res => console.log(res), 
+      err => console.log(err)
+    )
   },
   onLoad: () => {},
   onReady:function(){

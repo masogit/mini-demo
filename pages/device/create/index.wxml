@@ -35,5 +35,9 @@
             </view>
           </view>
 
+      <view class="weui-btn-area">
+          <button class="weui-btn" type="primary" form-type="submit" bindtap="uploadImages">上传</button>
+      </view>
+
     </view>
   </view>

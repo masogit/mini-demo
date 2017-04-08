@@ -16,21 +16,20 @@ Page({
     })
   },
 
-  onLoad: function () {
-    var that = this
+  onLoad() {
 
     wx.login({
     success: res => {
 
         // Login WX success and get User Info
-        that.setStatus('wx login success')
+        this.setStatus('wx login success')
         wx.getUserInfo({
-            success: function (res) {
-                that.setStatus('got userInfo: ' + res.userInfo)
+            success: res => {
+                this.setStatus('got userInfo: ' + res.userInfo)
 
                 var app = getApp()
                 app.globalData.userInfo = res.userInfo
-                that.setData({
+                this.setData({
                   userInfo: res.userInfo
                 })
             }

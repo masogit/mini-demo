@@ -2,7 +2,9 @@ const server = 'http://120.132.8.152:8090'
 const urls = {
     basicAuth: '/api/apm/security/userAccounts/authenticateBasic',
     weChatBinding: '/api/apm/security/userAccounts/weChatBindings',
-    weChatAuth: '/api/apm/security/userAccounts/authenticateWeChat'
+    weChatAuth: '/api/apm/security/userAccounts/authenticateWeChat',
+
+    objSingle: '/api/apm/objectHub/objects/single'
 }
 
 Object.keys(urls).forEach(key => urls[key] = server + urls[key])

@@ -22,17 +22,11 @@ Page({
       data
     })
     .then(res => {
-
         if (res.data && res.data.bizStatusCode === "OK") {
-          if (res.data.data && res.data.data.id_token) {
-
-            rest.setToken(res.data.data.id_token)
             if (res.data && res.data.data && res.data.data.loginName){
               app.globalData.loginName = res.data.data.loginName
             }
-            native.navigate('/cmms/index', `绑定成功! ${res.data.message}`)
-
-          }
+            native.navigate('/pages/index', `绑定成功! ${res.data.message}`)
         }
 
     }, err => {
