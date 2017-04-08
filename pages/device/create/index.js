@@ -10,8 +10,8 @@ Page({
   chooseImage() {
     console.log('choose Image...')
     wx.chooseImage({
-      sourceType: 2,
-      sizeType: 2,
+      sourceType: ['album', 'camera'],
+      sizeType: ['original', 'compressed'],
       count: this.data.count,
       success: res => {
         console.log(res)
