@@ -7,7 +7,7 @@ Page({
     userInfo: null,
     weChatId: null
   },
-  Login: (e) => {
+  Login(e) {
     const app = getApp()
     const data = {
       loginName: e.detail.value.login_name,
@@ -20,21 +20,13 @@ Page({
       method: 'POST',
       url: urls.weChatBinding,
       data
-    })
-    .then(res => {
-        if (res.data && res.data.bizStatusCode === "OK") {
-            if (res.data && res.data.data && res.data.data.loginName){
-              app.globalData.loginName = res.data.data.loginName
-            }
-            native.navigate('/pages/index', `绑定成功! ${res.data.message}`)
-        }
-
-    }, err => {
-        wx.showToast({
-            title: `绑定失败! ${JSON.stringify(err)}`,
-            duration: 5000
-        })
-    })
+    }).then(res => res.data.data.loginName)
+      .then(loginName => {
+        app.globalData.loginName = loginName
+        return rest.go({ title: `${loginName} 绑定成功!`, duration: 3000}, wx.showToast)
+      })
+      .then(() => wx.navigateTo({ url: '/pages/index' })
+      , err => wx.showToast({ title: `绑定失败! ${JSON.stringify(err)}`, duration: 5000 }))
 
   },
   onLoad:function(options){

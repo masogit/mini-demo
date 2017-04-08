@@ -59,16 +59,6 @@ Page({
     const isFile = true
     const token = getApp().globalData.token
     this.data.imageList.forEach(path => {
-    //   rest.go({
-    //     url: urls.objSingle,
-    //     filePath: path,
-    //     name:'file',
-    //   }, wx.uploadFile)
-    //   .then(
-    //     res => console.log(res), 
-    //     err => console.log(err)
-    //   )
-    // })
       promises.push(
         rest.go({
           url: urls.objSingle,
@@ -83,8 +73,8 @@ Page({
       err => console.log(err)
     )
   },
-  onLoad: () => {},
-  onReady:function(){
+  onLoad() {},
+  onReady() {
     // 页面渲染完成
   },
   onShow() {

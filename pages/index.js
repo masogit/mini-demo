@@ -50,11 +50,9 @@ Page({
     },
     onLoad: function(options) {
     },
-    onShow: function() {
-        var that = this
-        const app = getApp()
-        that.setData({
-            userInfo: app.globalData.userInfo
+    onShow() {
+        this.setData({
+            userInfo: getApp().globalData.userInfo
         })
     }
 });

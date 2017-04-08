@@ -32,7 +32,7 @@ class REST {
                     case 404: reject('Not Found'); break
                     case 500: reject('Server error'); break
                     case 200: resolve(res); break
-                    default: reject(res.statusCode); 
+                    default: resolve(res); 
                 }
             }
 
