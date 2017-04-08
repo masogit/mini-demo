@@ -13,7 +13,7 @@
       </view>
 
       <view class="weui-cells__title">
-          上传图片: {{imageList.length}}/{{count[countIndex]}}
+          上传图片: {{imageList.length}}/{{count}}
       </view>
         <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">

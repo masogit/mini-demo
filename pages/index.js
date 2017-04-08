@@ -1,4 +1,3 @@
-import { scan } from '../actions/native'
 Page({
     data: {
         userInfo: null,

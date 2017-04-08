@@ -1,6 +1,3 @@
-import { rest, native } from './actions/index'
-import { urls } from './constants/index'
-
 App({
     onLaunch: () => console.log('app start...'),
     onShow: function () {
