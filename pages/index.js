@@ -9,7 +9,7 @@ Page({
                 open: false,
                 pages: [
                     { key: '扫码建档', page: '/pages/device/create/index' }, 
-                    { key: '扫码查看', page: '/pages/device/detail/index' },
+                    { key: '扫码查看', page: '/pages/device/detail/index?name=abababab' },
                     { key: '设备查询', page: '/pages/device/list/index' }
                 ]
             },
@@ -47,6 +47,8 @@ Page({
         this.setData({
             list: list
         });
+    },
+    onLoad: function(options) {
     },
     onShow: function() {
         var that = this

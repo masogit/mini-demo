@@ -19,5 +19,27 @@
     "uploadFile": 10000,
     "downloadFile": 10000
   },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/device/list/index",
+        "text": "设备",
+        "iconPath": "pages/images/icon_nav_special.png",
+        "selectedIconPath": "pages/images/icon_nav_special.png"
+      },
+      {
+        "pagePath": "pages/device/list/index",
+        "text": "报修",
+        "iconPath": "pages/images/icon_nav_widget.png",
+        "selectedIconPath": "pages/images/icon_nav_widget.png"
+      },
+      {
+        "pagePath": "pages/device/list/index",
+        "text": "工单",
+        "iconPath": "pages/images/icon_nav_z-index.png",
+        "selectedIconPath": "pages/images/icon_nav_z-index.png"
+      }
+    ]
+  },
   "debug": true
 }
