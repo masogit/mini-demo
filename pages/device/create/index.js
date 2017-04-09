@@ -1,11 +1,14 @@
 import { rest } from '../../../actions/index'
 import { urls } from '../../../constants/index'
+
+const keyImages = 'images'
 Page({
   data:{
     image: {
       list: [],
       count: 5
     },
+    savedImages: [],
     qrCode: '',
     status: '',
     voice: {
@@ -25,11 +28,9 @@ Page({
       sizeType: ['original', 'compressed'],
       count: this.data.image.count,
       success: res => {
-        console.log(res)
+        this.data.image.list = res.tempFilePaths
         this.setData({
-          image: {
-            list: res.tempFilePaths
-          }
+          image: this.data.image
         })
       }
     })
@@ -56,19 +57,41 @@ Page({
 
     Promise.all(promises).then(
       results => {
-        const data = results.map(result => {
+        const images = results.map(result => {
           const data = JSON.parse(result.data)
-          console.log(data)
           return data.data.objectId
         })
 
-        console.log(data)
+        this.saveImages(images)
       }, 
       err => console.log(err)
     )
   },
+  saveImages(images) {
+    rest.go({ key: keyImages }, wx.getStorage)
+    .then(res => res.data, err => [])
+    .then(data => data.concat(images))
+    .then(data => rest.go({ key: keyImages, data }, wx.setStorage))
+    .then(() => rest.go({ title: '保存成功', duration: 3000 }, wx.showToast))
+    .then(() => this.loadImages())
+    .then(() => {
+      this.data.image.list = []
+      this.setData({
+        image: this.data.image
+      })
+    })
+  },
+  loadImages() {
+    return rest.go({ key: keyImages }, wx.getStorage)
+    .then(res => res.data, err => [])
+    .then(images => {
+      const savedImages = images.map(image => urls.obj + image)
+      this.setData({ savedImages })
+    })
+  },
   onLoad() {
     console.log('Device Create page onLoad')
+    this.loadImages().then()
     this.scanCode()
   },
   onReady() {
