@@ -1,10 +1,16 @@
 const server = 'http://120.132.8.152:8090'
-const urls = {
-    basicAuth: '/api/apm/security/userAccounts/authenticateBasic',
-    weChatBinding: '/api/apm/security/userAccounts/weChatBindings',
-    weChatAuth: '/api/apm/security/userAccounts/authenticateWeChat',
+const userAccounts = '/api/apm/security/userAccounts'
+const objects = '/hcapmobjecthubservice/api/apm/objectHub/objects'
 
-    objSingle: '/api/apm/objectHub/objects/single'
+const urls = {
+    basicAuth: userAccounts + '/authenticateBasic',
+    weChatBinding: userAccounts + '/weChatBindings',
+    weChatAuth: userAccounts+ '/authenticateWeChat',
+
+    obj: objects + '/',
+    objSingle: objects + '/single',
+    objMutiple: objects + '/multiple',
+    objDownload: objects + '/download'
 }
 
 Object.keys(urls).forEach(key => urls[key] = server + urls[key])

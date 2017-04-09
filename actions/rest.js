@@ -1,30 +1,37 @@
 class REST {
     constructor() {
         this.header = {
-            // 'Content-Type': 'application/json',
-            Authentication: null
+            Authorization: null
         }
     }
 
-    setToken(res) {
-        if (!this.header.Authentication) {
-            if(res && res.data && res.data.data && res.data.data.id_token) {
-                const token = res.data.data.id_token
-                this.header.Authentication = token
-                // this.header.Authorization = token
-                getApp().globalData.token = token 
+    setHeader(res) {
+        
+        console.log(res)
+        
+        if(res && res.data && res.data.data) {
+
+            if (res.data.data.id_token) {
+                this.header.Authorization = res.data.data.id_token
+            }
+
+            if (res.data.data.loginId) {
+                this.header.loginId = res.data.data.loginId
             }
         }
+
     }
 
     go(param, fn = wx.request) {
-        if (this.header.Authentication) {
+
+        if (this.header.Authorization) {
             param.header = this.header
         }
             
         return new Promise((resolve, reject) => {
+
             param.success = res => {
-                this.setToken(res)
+                this.setHeader(res)
                 switch(res.statusCode) {
                     case 400: reject('Bad Request'); break
                     case 401: reject('Unauthorized'); break
@@ -38,6 +45,10 @@ class REST {
 
             param.fail = err => {
                 reject(err)
+            }
+
+            param.complete = () => {
+                console.log(param)
             }
 
             fn(param)  

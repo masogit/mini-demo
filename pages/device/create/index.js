@@ -2,21 +2,34 @@ import { rest } from '../../../actions/index'
 import { urls } from '../../../constants/index'
 Page({
   data:{
-    imageList: [],
-    count: 5,
+    image: {
+      list: [],
+      count: 5
+    },
     qrCode: '',
-    status: ''
+    status: '',
+    voice: {
+      recording: false,
+      playing: false,
+      hasRecord: false,
+      recordTime: 0,
+      playTime: 0,
+      formatedRecordTime: '00:00:00',
+      formatedPlayTime: '00:00:00'
+    }
   },
   chooseImage() {
     console.log('choose Image...')
     wx.chooseImage({
       sourceType: ['album', 'camera'],
       sizeType: ['original', 'compressed'],
-      count: this.data.count,
+      count: this.data.image.count,
       success: res => {
         console.log(res)
         this.setData({
-          imageList: res.tempFilePaths
+          image: {
+            list: res.tempFilePaths
+          }
         })
       }
     })
@@ -25,14 +38,13 @@ Page({
     var current = e.target.dataset.src
     wx.previewImage({
       current,
-      urls: this.data.imageList
+      urls: this.data.image.list
     })
   },
   uploadImages() {
     let promises = []
     const isFile = true
-    const token = getApp().globalData.token
-    this.data.imageList.forEach(path => {
+    this.data.image.list.forEach(path => {
       promises.push(
         rest.go({
           url: urls.objSingle,
@@ -43,7 +55,15 @@ Page({
     })
 
     Promise.all(promises).then(
-      res => console.log(res), 
+      results => {
+        const data = results.map(result => {
+          const data = JSON.parse(result.data)
+          console.log(data)
+          return data.data.objectId
+        })
+
+        console.log(data)
+      }, 
       err => console.log(err)
     )
   },
