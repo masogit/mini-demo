@@ -1,43 +1,38 @@
 <!--cmms/device/create/index.wxml-->
-  <view class="page-body">
+  <view class="page">
 
       <view class="weui-cells__title">扫码结果: {{status}}</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">{{qrCode}}</view>
-          </view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell" style="min-height: 25rpx" bindtap="scanCode">
+          <view class="weui-cell__bd">{{qrCode}}</view>
         </view>
-      
-      <view class="weui-btn-area">
-          <button class="weui-btn" type="primary" form-type="submit" bindtap="onShow">扫码</button>
       </view>
-
+ 
       <view class="weui-cells__title">
           上传图片: {{imageList.length}}/{{count}}
       </view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList}}" wx:for-item="image" wx:key="*pic">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
-                      </view>
-                    </block>
-                  </view>
-                  <view class="weui-uploader__input-box">
-                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
-                  </view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="weui-uploader">
+              <view class="weui-uploader__bd">
+                <view class="weui-uploader__files">
+                  <block wx:for="{{imageList}}" wx:for-item="image" wx:key="*pic">
+                    <view class="weui-uploader__file">
+                      <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                    </view>
+                  </block>
+                </view>
+                <view class="weui-uploader__input-box">
+                  <view class="weui-uploader__input" bindtap="chooseImage"></view>
                 </view>
               </view>
             </view>
           </view>
-
+        </view>
+      </view>
+      
       <view class="weui-btn-area">
           <button class="weui-btn" type="primary" form-type="submit" bindtap="uploadImages">上传</button>
       </view>
-
-    </view>
   </view>

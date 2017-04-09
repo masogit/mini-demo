@@ -47,29 +47,32 @@ Page({
       err => console.log(err)
     )
   },
-  onLoad() {},
+  onLoad() {
+    console.log('Device Create page onLoad')
+    this.scanCode()
+  },
   onReady() {
     // 页面渲染完成
   },
-  onShow() {
-    this.setData({ status: 'Scanning...' })
+  scanCode() {
+    console.log('scan code')
+    this.setData({ status: 'scanning...' })
     wx.scanCode({
       success: res => {
-        if (res.errMsg === "scanCode:ok" && res.scanType === 'QR_CODE' && res.result)
-        this.setData({
-          qrCode: res.result
-        })
-        wx.showToast({
-            title: `QR code: ${res.result}`,
-            icon: 'success',
-            duration: 1000
-        })
+        if (res.errMsg === "scanCode:ok" && res.scanType === 'QR_CODE' && res.result) {
+          this.setData({
+            qrCode: res.result
+          })
+          console.log('scan code success')
+          this.setData({ status: 'success!' })
+        } else {
+          console.log('scan code complete')
+          this.setData({ status: 'complete!' })
+        }
       },
       fail: res => {
+        console.log('scan code fail')
         this.setData({ status: 'fail!' })
-      },
-      complete: res => {
-        this.setData({ status: 'complete!' })
       }
     })
   },
