@@ -10,7 +10,10 @@
       </view>
  
       <block wx:if="{{savedImages.length > 0}}">
-      <view class="weui-cells__title">已上传图片</view>
+      <view class="weui-cells__title between">
+        <view>已上传图片</view>
+        <view bindtap="clearSaved" data-media="images">清除</view>
+      </view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
@@ -19,7 +22,12 @@
                 <view class="weui-uploader__files">
                   <block wx:for="{{savedImages}}" wx:for-item="image" wx:key="*pic">
                     <view class="weui-uploader__file">
-                      <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                      <image class="weui-uploader__img" 
+                             src="{{image}}" 
+                             data-src="{{image}}"
+                             data-list="{{savedImages}}"
+                             bindtap="image" 
+                             data-action="preview"></image>
                     </view>
                   </block>
                 </view>
@@ -32,7 +40,7 @@
 
 
       <view class="weui-cells__title">
-          上传图片: {{image.list.length}}/{{image.count}}
+          <view>上传图片: {{image.list.length}}/{{image.count}}</view>
       </view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
@@ -40,14 +48,20 @@
             <view class="weui-uploader">
               <view class="weui-uploader__bd">
                 <view class="weui-uploader__files">
-                  <block wx:for="{{image.list}}" wx:for-item="image" wx:key="*pic">
+                  <block wx:for="{{image.list}}" wx:for-item="img" wx:key="*pic">
                     <view class="weui-uploader__file">
-                      <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                      <image class="weui-uploader__img" 
+                             src="{{img}}" 
+                             data-src="{{img}}" 
+                             data-list="{{image.list}}"
+                             bindtap="image" 
+                             data-action="preview"></image>
                     </view>
                   </block>
                 </view>
                 <view class="weui-uploader__input-box">
-                  <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                  <view class="weui-uploader__input" bindtap="image" data-action="choose"></view>
+                  <!--<view class="weui-uploader__input" bindtap="chooseImage"></view>-->
                 </view>
               </view>
             </view>
@@ -55,18 +69,58 @@
         </view>
       </view>
 
+      <block wx:if="{{savedVoice}}">
+        <view class="weui-cells__title between">
+          <view>已上传语音</view>
+          <view bindtap="clearSaved" data-media="voice">清除</view>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+               <audio src="{{savedVoice}}" 
+                      poster="资产云管家" 
+                      name="故障报修" 
+                      author="微信小程序"
+                      controls />
+                <!--<image class="voice__img" src="/images/play.png" bindtap="playSavedVoice"></image>
+                <image class="voice__img" src="/images/stop.png" bindtap="stopSavedVoice"></image>-->
+            </view>
+          </view>
+        </view>
+      </block>
 
-      <view class="weui-cells__title">上传语音</view>
+      <view class="weui-cells__title">上传语音: {{voice.formatedRecordTime}}</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-123
+
+            <block wx:if="{{voice.recording === false && voice.playing === false && voice.hasRecord === false}}">
+              <image class="voice__img" src="/images/record.png" bindtap="startRecord"></image>
+            </block>
+
+            <block wx:if="{{voice.recording === true}}">
+              <view class="button-stop-record" bindtap="stopRecord"></view>
+            </block>
+
+            <block wx:if="{{voice.hasRecord === true && voice.playing === false}}">
+                <image class="voice__img" src="/images/play.png" bindtap="playVoice"></image>
+                <image class="voice__img" src="/images/trash.png" bindtap="clear"></image>
+            </block>
+
+            <block wx:if="{{voice.hasRecord === true && voice.playing === true}}">
+                <image class="voice__img" src="/images/stop.png" bindtap="stopVoice"></image>
+              <!-- <view class="page-body-button" bindtap="pauseVoice">
+                <image src="/images/pause.png"></image>
+              </view> -->
+                <image class="voice__img" src="/images/trash.png" bindtap="clear"></image>
+                {{voice.playTime}}
+            </block>
           </view>
         </view>
       </view>
 
 
       <view class="weui-btn-area">
-          <button class="weui-btn" type="primary" form-type="submit" bindtap="uploadImages">上传</button>
+          <button class="weui-btn" type="primary" form-type="submit" bindtap="uploadVoice">上传</button>
       </view>
   </view>

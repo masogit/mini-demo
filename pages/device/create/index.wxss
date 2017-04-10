@@ -9,10 +9,18 @@
   text-align: center;
 }
 .button-stop-record {
-  width: 110rpx;
-  height: 110rpx;
+  width: 55rpx;
+  height: 55rpx;
   border: 20rpx solid #fff;
   background-color: #f55c23;
-  border-radius: 130rpx;
-  margin: 0 auto;
+  border-radius: 60rpx;
+}
+.voice__img {
+  width: 80rpx;
+  height: 80rpx;
+}
+.between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
