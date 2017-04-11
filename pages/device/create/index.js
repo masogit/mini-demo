@@ -27,7 +27,7 @@ Page({
     }
   },
   /** Images */
-  image,
+  // image,
   chooseImage() {
     console.log('choose Image...')
     wx.chooseImage({
@@ -76,10 +76,7 @@ Page({
     )
   },
   saveImages(images) {
-    rest.go({ key: keyImages }, wx.getStorage)
-    .then(res => res.data, err => [])
-    .then(data => data.concat(images))
-    .then(data => rest.go({ key: keyImages, data }, wx.setStorage))
+    rest.go({ key: keyImages, data: images }, wx.setStorage)
     .then(() => rest.go({ title: '保存成功', duration: 3000 }, wx.showToast))
     .then(() => this.loadImages())
     .then(() => {
@@ -90,12 +87,12 @@ Page({
     })
   },
   loadImages() {
-    return rest.go({ key: keyImages }, wx.getStorage)
+    rest.go({ key: keyImages }, wx.getStorage)
     .then(res => res.data, err => [])
     .then(images => {
       const savedImages = images.map(image => urls.obj + image)
       this.setData({ savedImages })
-    })
+    }, err => console.log(err))
   },
 
   /** Voice */
@@ -231,25 +228,36 @@ Page({
     .then(() => this.clear())
   },
   loadVoice() {
-    return rest.go({ key: keyVoice }, wx.getStorage)
+    rest.go({ key: keyVoice }, wx.getStorage)
     .then(res => res.data, err => '')
-    .then(voice => {
-      // this.setData({ savedVoice: urls.obj + voice + '.silk' })
-      this.setData({ savedVoice: 'http://apm.hcdigital.com.cn/clip.mp3' })
-    })
+    .then(voice => rest.go({ url: urls.obj + voice, type: 'audio' }))
+    // .then(res => {
+    //   console.log(res)
+    //   rest.go({filePath: res.tempFilePath}, wx.playVoice)
+    // })
+    // .then(() => {}, err => console.log(err))
+    .then(res => this.setData({ savedVoice: res.data }))
+    // .then(voice => {
+    //   this.setData({ savedVoice: urls.obj + voice + '.silk' })
+    //   // this.setData({ savedVoice: 'http://apm.hcdigital.com.cn/clip.mp3' })
+    // })
+  },
+  upload() {
+    this.uploadVoice()
+    this.uploadImages()
   },
   onLoad() {
     console.log('Device Create page onLoad')
-    this.loadImages().then()
-    this.loadVoice().then()
+    this.loadImages()
+    this.loadVoice()
     this.scanCode()
   },
   clearSaved(e) {
     const media = e.target.dataset.media
-    rest.go({ key: media, data: '' }, wx.setStorage)
+    rest.go({ key: media, data: null }, wx.setStorage)
     .then(() => {
       if (media === keyImages)
-        this.setData({ savedImages: '' })
+        this.setData({ savedImages: [] })
       if (media === keyVoice)
         this.setData({ savedVoice: '' })
     })

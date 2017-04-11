@@ -6,15 +6,15 @@ let recordTimeInterval
 const keyImages = 'images'
 
 function image(e) {
-    const eventName = e.target.dataset.action
-    switch(eventName) {
-        case 'choose': choose.call(this); break;
-        case 'preview': preview.call(this, e); break;
-        case 'upload': upload.call(this); break;
-        case 'save': save.call(this); break;
-        case 'load': load.call(this); break;
-        default: break;
+    const event = {
+        choose,
+        preview,
+        upload,
+        save,
+        load
     }
+    const eventName = e.target.dataset.action
+    event[eventName].call(this, e)
 }
 
 function choose() {
