@@ -7,6 +7,7 @@ class REST {
 
     setHeader(res) {
         
+        console.log('response:')
         console.log(res)
         
         if(res && res.data && res.data.data) {
@@ -48,6 +49,7 @@ class REST {
             }
 
             param.complete = () => {
+                console.log('request param:')
                 console.log(param)
             }
 

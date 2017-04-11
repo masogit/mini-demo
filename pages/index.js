@@ -1,3 +1,5 @@
+import { rest } from '../actions/index'
+
 Page({
     data: {
         userInfo: null,
@@ -7,7 +9,7 @@ Page({
                 name: '设备管理',
                 open: false,
                 pages: [
-                    { key: '扫码建档', page: '/pages/device/create/index' }, 
+                    { key: '扫码建档', event: 'scanCode' }, 
                     { key: '扫码查看', page: '/pages/device/detail/index?name=abababab' },
                     { key: '设备查询', page: '/pages/device/list/index' }
                 ]
@@ -33,6 +35,14 @@ Page({
                 ]
             },
         ]
+    },
+    scanCode() {
+        rest.go({}, wx.scanCode).then(res => {
+            if (res.result && res.scanType === "QR_CODE")
+                rest.go({
+                    url: `/pages/device/create/index?qrCode=${res.result}`
+                }, wx.navigateTo).then()
+        }, err => console.log(err))
     },
     kindToggle: function (e) {
         var id = e.currentTarget.id, list = this.data.list;

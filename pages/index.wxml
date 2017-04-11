@@ -17,7 +17,7 @@
                                     <view class="weui-cell__bd">{{page.key}}</view>
                                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                                 </navigator>
-                                <view wx:if="{{page.event}}">
+                                <view wx:if="{{page.event}}" class="weui-cell weui-cell_access">
                                     <view class="weui-cell__bd" bindtap="{{page.event}}">{{page.key}}</view>
                                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                                 </view>

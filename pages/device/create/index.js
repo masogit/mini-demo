@@ -14,6 +14,7 @@ Page({
     },
     savedImages: [],
     savedVoice: '',
+    savedVoiceData: '',
     qrCode: '',
     status: '',
     voice: {
@@ -222,6 +223,7 @@ Page({
     }
   },
   saveVoice(data) {
+    console.log('saveVoice' + data)
     rest.go({ key: keyVoice, data }, wx.setStorage)
     .then(() => rest.go({ title: '保存成功', duration: 3000}, wx.showToast))
     .then(() => this.loadVoice())
@@ -230,27 +232,29 @@ Page({
   loadVoice() {
     rest.go({ key: keyVoice }, wx.getStorage)
     .then(res => res.data, err => '')
-    .then(voice => rest.go({ url: urls.obj + voice, type: 'audio' }))
-    // .then(res => {
-    //   console.log(res)
-    //   rest.go({filePath: res.tempFilePath}, wx.playVoice)
-    // })
-    // .then(() => {}, err => console.log(err))
-    .then(res => this.setData({ savedVoice: res.data }))
-    // .then(voice => {
-    //   this.setData({ savedVoice: urls.obj + voice + '.silk' })
-    //   // this.setData({ savedVoice: 'http://apm.hcdigital.com.cn/clip.mp3' })
-    // })
+    .then(voice => {
+      this.setData({ savedVoice: voice })
+      console.log('fetch audio data')
+      return rest.go({ url: urls.obj + voice, type: 'audio' }, wx.request)
+    })
+    .then(res => {
+      console.log('audio response: ')
+      console.log(res)
+      this.setData({ savedVoiceData: res.data })
+    })
   },
   upload() {
     this.uploadVoice()
     this.uploadImages()
   },
-  onLoad() {
+  onLoad(param) {
     console.log('Device Create page onLoad')
     this.loadImages()
     this.loadVoice()
-    this.scanCode()
+    this.setData({
+      userInfo: getApp().globalData.userInfo,
+      qrCode: param.qrCode
+    })
   },
   clearSaved(e) {
     const media = e.target.dataset.media
@@ -268,8 +272,7 @@ Page({
   scanCode() {
     console.log('scan code')
     this.setData({ status: 'scanning...' })
-    wx.scanCode({
-      success: res => {
+    rest.go({}, wx.scanCode).then(res => {
         if (res.errMsg === "scanCode:ok" && res.scanType === 'QR_CODE' && res.result) {
           this.setData({
             qrCode: res.result
@@ -280,12 +283,12 @@ Page({
           console.log('scan code complete')
           this.setData({ status: 'complete!' })
         }
-      },
-      fail: res => {
+    }, err => {
         console.log('scan code fail')
         this.setData({ status: 'fail!' })
-      }
     })
+  },
+  onShow() {
   },
   onHide:function(){
     // 页面隐藏

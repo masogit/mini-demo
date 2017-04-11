@@ -8,5 +8,8 @@ Page({
     this.setData({
       name: 'Details'
     })
+  },
+  onLoad(options) {
+    console.log(options)
   }
 })
