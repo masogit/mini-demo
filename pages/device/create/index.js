@@ -1,4 +1,4 @@
-import { rest, util, image } from '../../../actions/index'
+import { rest, util, image, voice } from '../../../actions/index'
 import { urls } from '../../../constants/index'
 
 let playTimeInterval
@@ -7,16 +7,21 @@ const keyImages = 'images'
 const keyVoice = 'voice'
 
 Page({
+
   data:{
+
     image: {
       list: [],
       count: 5
     },
+
     savedImages: [],
     savedVoice: '',
     savedVoiceData: '',
+
     qrCode: '',
     status: '',
+    
     voice: {
       recording: false,
       playing: false,
@@ -27,230 +32,22 @@ Page({
       formatedPlayTime: '00:00:00'
     }
   },
+
   /** Images */
-  image: e => util.exec(e, image).call(this),
-  chooseImage() {
-    console.log('choose Image...')
-    wx.chooseImage({
-      sourceType: ['album', 'camera'],
-      sizeType: ['original', 'compressed'],
-      count: this.data.image.count,
-      success: res => {
-        this.data.image.list = res.tempFilePaths
-        this.setData({
-          image: this.data.image
-        })
-      }
-    })
-  },
-  previewImage(e) {
-    const current = e.target.dataset.src
-    const list = e.target.dataset.list
-    wx.previewImage({
-      current,
-      urls: list
-    })
-  },
-  uploadImages() {
-    let promises = []
-    const isFile = true
-    this.data.image.list.forEach(path => {
-      promises.push(
-        rest.go({
-          url: urls.objSingle,
-          filePath: path,
-          name: 'file',
-        }, wx.uploadFile)
-      )
-    })
-
-    Promise.all(promises).then(
-      results => {
-        const images = results.map(result => {
-          const data = JSON.parse(result.data)
-          return data.data.objectId
-        })
-
-        this.saveImages(images)
-      }, 
-      err => console.log(err)
-    )
-  },
-  saveImages(images) {
-    rest.go({ key: keyImages, data: images }, wx.setStorage)
-    .then(() => rest.go({ title: '保存成功', duration: 3000 }, wx.showToast))
-    .then(() => this.loadImages())
-    .then(() => {
-      this.data.image.list = []
-      this.setData({
-        image: this.data.image
-      })
-    })
-  },
-  loadImages() {
-    rest.go({ key: keyImages }, wx.getStorage)
-    .then(res => res.data, err => [])
-    .then(images => {
-      const savedImages = images.map(image => urls.obj + image)
-      this.setData({ savedImages })
-    }, err => console.log(err))
-  },
+  image(e) { util.exec.call(this, e, image) },
 
   /** Voice */
-  startRecord () {
-    this.data.voice.recording = true
-    this.setData({ voice: this.data.voice })
+  voice(e) { util.exec.call(this, e, voice) },
 
-    recordTimeInterval = setInterval(() => {
-      this.data.voice.recordTime += 1
-      this.data.voice.formatedRecordTime = util.formatTime(this.data.voice.recordTime)
-      this.setData({ voice: this.data.voice })
-    }, 1000)
 
-    wx.startRecord({
-      success: res => {
-        console.log('voice tempFilePath:' + res.tempFilePath)
-        this.data.voice = Object.assign(this.data.voice, {
-          hasRecord: true,
-          tempFilePath: res.tempFilePath,
-          formatedPlayTime: util.formatTime(this.data.playTime)
-        })
-        this.setData({ voice: this.data.voice })
-      },
-      complete: () => {
-        this.data.voice.recording = false
-        // thid.data.voice.playing = false
-        this.setData({ voice: this.data.voice })
-        clearInterval(recordTimeInterval)
-      }
-    })
-  },
-  stopRecord() {
-    wx.stopRecord()
-  },
-  stopRecordUnexpectedly () {
-    wx.stopRecord({
-      success: () => {
-        console.log('stop record success')
-        clearInterval(recordTimeInterval)
-        this.data.voice = {
-          recording: false,
-          hasRecord: false,
-          recordTime: 0,
-          formatedRecordTime: util.formatTime(0)
-        }
-        this.setData({ voice: this.data.voice })
-      }
-    })
-  },
-  playSavedVoice() {
-    if (this.data.savedVoice) {
-      const voicePath = urls.obj + this.data.savedVoice + '.silk'
-      console.log(voicePath)
-      wx.playVoice({ filePath: voicePath })
-    }
-  },
-  stopVoice() {
-    wx.pauseVoice()
-  },
-  playVoice() {
-    playTimeInterval = setInterval(() => {
-      var playTime = this.data.voice.playTime + 1
-      console.log('update playTime', playTime)
-      this.data.voice = Object.assign(this.data.voice, {
-        playing: true,
-        formatedPlayTime: util.formatTime(playTime),
-        playTime: playTime
-      })
-      this.setData({ voice: this.data.voice })
-    }, 1000)
-    wx.playVoice({
-      filePath: this.data.voice.tempFilePath,
-      success: () => {
-        clearInterval(playTimeInterval)
-        var playTime = 0
-        console.log('play voice finished')
-        this.data.voice = Object.assign(this.data.voice, {
-          playing: false,
-          formatedPlayTime: util.formatTime(playTime),
-          playTime: playTime
-        })
-        this.setData({ voice: this.data.voice })
-      }
-    })
-  },
-  pauseVoice() {
-    clearInterval(playTimeInterval)
-    wx.pauseVoice()
-    this.data.voice.playing = false
-    this.setData({ voice: this.data.voice })
-  },
-  stopVoice() {
-    clearInterval(playTimeInterval)
-    this.data.voice = Object.assign(this.data.voice, {
-      playing: false,
-      formatedPlayTime: util.formatTime(0),
-      playTime: 0
-    })
-    this.setData({ voice: this.data.voice })
-    wx.stopVoice()
-  },
-  clear() {
-    clearInterval(playTimeInterval)
-    wx.stopVoice()
-    this.data.voice = Object.assign(this.data.voice, {
-      playing: false,
-      hasRecord: false,
-      tempFilePath: '',
-      formatedRecordTime: util.formatTime(0),
-      recordTime: 0,
-      playTime: 0
-    })
-    this.setData({ voice: this.data.voice })
-  },
-  uploadVoice() {
-    if (this.data.voice.tempFilePath) {
-        rest.go({
-            url: urls.objSingle,
-            filePath: this.data.voice.tempFilePath,
-            name: 'file'
-        }, wx.uploadFile).then(res => {
-          const voice = JSON.parse(res.data);
-
-          if (voice.data.objectId)
-            this.saveVoice(voice.data.objectId)
-        })
-    }
-  },
-  saveVoice(data) {
-    console.log('saveVoice' + data)
-    rest.go({ key: keyVoice, data }, wx.setStorage)
-    .then(() => rest.go({ title: '保存成功', duration: 3000}, wx.showToast))
-    .then(() => this.loadVoice())
-    .then(() => this.clear())
-  },
-  loadVoice() {
-    rest.go({ key: keyVoice }, wx.getStorage)
-    .then(res => res.data, err => '')
-    .then(voice => {
-      this.setData({ savedVoice: voice })
-      console.log('fetch audio data')
-      return rest.go({ url: urls.obj + voice, type: 'audio' }, wx.request)
-    })
-    .then(res => {
-      console.log('audio response: ')
-      console.log(res)
-      this.setData({ savedVoiceData: res.data })
-    })
-  },
   upload() {
-    this.uploadVoice()
-    this.uploadImages()
+    voice.upload.call(this)
+    image.upload.call(this)
   },
   onLoad(param) {
     console.log('Device Create page onLoad')
-    this.loadImages()
-    this.loadVoice()
+    image.load.call(this)
+    voice.load.call(this)
     this.setData({
       userInfo: getApp().globalData.userInfo,
       qrCode: param.qrCode

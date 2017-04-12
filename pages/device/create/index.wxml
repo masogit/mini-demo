@@ -26,7 +26,7 @@
                              src="{{image}}" 
                              data-src="{{image}}"
                              data-list="{{savedImages}}"
-                             bindtap="previewImage" 
+                             bindtap="image" 
                              data-action="preview"></image>
                     </view>
                   </block>
@@ -54,14 +54,13 @@
                              src="{{img}}" 
                              data-src="{{img}}" 
                              data-list="{{image.list}}"
-                             bindtap="previewImage" 
+                             bindtap="image" 
                              data-action="preview"></image>
                     </view>
                   </block>
                 </view>
                 <view class="weui-uploader__input-box">
-                  <view class="weui-uploader__input" bindtap="chooseImage" data-action="choose"></view>
-                  <!--<view class="weui-uploader__input" bindtap="chooseImage"></view>-->
+                  <view class="weui-uploader__input" bindtap="image" data-action="choose"></view>
                 </view>
               </view>
             </view>
@@ -82,8 +81,6 @@
                       name="故障报修语音" 
                       author="{{userInfo.nickName}}"
                       controls />
-                <!--<image class="voice__img" src="/images/play.png" bindtap="playSavedVoice"></image>
-                <image class="voice__img" src="/images/stop.png" bindtap="stopSavedVoice"></image>-->
             </view>
           </view>
         </view>
@@ -95,24 +92,24 @@
           <view class="weui-cell__bd">
 
             <block wx:if="{{voice.recording === false && voice.playing === false && voice.hasRecord === false}}">
-              <image class="voice__img" src="/images/record.png" bindtap="startRecord"></image>
+              <image class="voice__img" src="/images/record.png" bindtap="voice" data-action="recordStart"></image>
             </block>
 
             <block wx:if="{{voice.recording === true}}">
-              <view class="button-stop-record" bindtap="stopRecord"></view>
+              <view class="button-stop-record" bindtap="voice" data-action="recordStop"></view>
             </block>
 
             <block wx:if="{{voice.hasRecord === true && voice.playing === false}}">
-                <image class="voice__img" src="/images/play.png" bindtap="playVoice"></image>
-                <image class="voice__img" src="/images/trash.png" bindtap="clear"></image>
+                <image class="voice__img" src="/images/play.png" bindtap="voice" data-action="play"></image>
+                <image class="voice__img" src="/images/trash.png" bindtap="voice" data-action="clear"></image>
             </block>
 
             <block wx:if="{{voice.hasRecord === true && voice.playing === true}}">
-                <image class="voice__img" src="/images/stop.png" bindtap="stopVoice"></image>
+                <image class="voice__img" src="/images/stop.png" bindtap="voice" data-action="stop"></image>
               <!-- <view class="page-body-button" bindtap="pauseVoice">
                 <image src="/images/pause.png"></image>
               </view> -->
-                <image class="voice__img" src="/images/trash.png" bindtap="clear"></image>
+                <image class="voice__img" src="/images/trash.png" bindtap="voice" data-action="clear"></image>
                 {{voice.playTime}}
             </block>
           </view>
@@ -121,6 +118,6 @@
 
 
       <view class="weui-btn-area">
-          <button class="weui-btn" type="primary" form-type="submit" bindtap="upload">上传</button>
+          <button class="weui-btn" type="primary" form-type="submit" bindtap="voice" data-action="upload">上传</button>
       </view>
   </view>

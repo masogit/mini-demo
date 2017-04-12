@@ -36,6 +36,7 @@ function exec(e, action) {
 }
 
 export {
+  exec,
   formatTime,
   formatLocation
 }
