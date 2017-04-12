@@ -1,4 +1,8 @@
-const server = 'http://120.132.8.152:8090'
+
+// const server = 'http://120.132.8.152:8090'
+// const server = 'https://my-node.run.aws-jp01-pr.ice.predix.io' 
+const server = 'https://apmgw.ittun.com' 
+
 const userAccounts = '/api/apm/security/userAccounts'
 const objects = '/hcapmobjecthubservice/api/apm/objectHub/objects'
 

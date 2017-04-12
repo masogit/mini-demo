@@ -30,6 +30,11 @@ function formatLocation(longitude, latitude) {
   }
 }
 
+function exec(e, action) {
+    const actionName = e.target.dataset.action
+    action[actionName].call(this, e)
+}
+
 export {
   formatTime,
   formatLocation

@@ -5,17 +5,27 @@ let playTimeInterval
 let recordTimeInterval
 const keyImages = 'images'
 
-function image(e) {
-    const event = {
-        choose,
-        preview,
-        upload,
-        save,
-        load
-    }
-    const eventName = e.target.dataset.action
-    event[eventName].call(this, e)
+const image = {
+    choose,
+    preview,
+    upload,
+    save,
+    load
 }
+
+export default image
+
+// function image(e) {
+//     const event = {
+//         choose,
+//         preview,
+//         upload,
+//         save,
+//         load
+//     }
+//     const eventName = e.target.dataset.action
+//     event[eventName].call(this, e)
+// }
 
 function choose() {
     console.log('choose Image...')
@@ -101,4 +111,4 @@ function load() {
     })
 }
 
-export default image
+// export default image

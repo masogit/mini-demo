@@ -28,7 +28,7 @@ Page({
     }
   },
   /** Images */
-  // image,
+  image: e => util.exec(e, image).call(this),
   chooseImage() {
     console.log('choose Image...')
     wx.chooseImage({
