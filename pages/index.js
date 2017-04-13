@@ -18,7 +18,10 @@ Page({
                 id: 'widget',
                 name: '设备报修',
                 open: false,
-                pages: ['扫码报修', '报修单查询']
+                pages: [
+                    { key: '扫码报修', page: '/pages/request/create/index' },
+                    { key: '我的报修', page: '/pages/request/list/index' }
+                ]
             },
             {
                 id: 'feedback',

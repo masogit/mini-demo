@@ -35,8 +35,13 @@ function exec(e, action) {
     action[actionName].call(this, e)
 }
 
+function rand() {
+  return (Math.random() + 1).toString(36).substring(7)
+}
+
 export {
   exec,
+  rand,
   formatTime,
   formatLocation
 }

@@ -5,7 +5,9 @@
     "pages/user/login/index",
     "pages/device/create/index",
     "pages/device/detail/index",
-    "pages/device/list/index"
+    "pages/device/list/index",
+    "pages/request/create/index",
+    "pages/request/list/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

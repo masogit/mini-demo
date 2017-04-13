@@ -1,0 +1,29 @@
+<!--pages/request/create/index.wxml-->
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <form bindsubmit="messageSend">
+    
+    <view class="weui-cells__title">发送用户消息</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">用户ID</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input name="userId" class="weui-input" placeholder="请输入用户ID"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input weui-cell_vcode">
+            <view class="weui-cell__hd">
+                <view class="weui-label">内容</view>
+            </view>
+            <view class="textarea-wrp">
+              <textarea name="message" auto-focus="true" style="height: 3em" />
+            </view>
+        </view>
+      </view>
+
+      <view class="weui-btn-area">
+          <button class="weui-btn" type="primary" form-type="submit">发送消息</button>
+      </view>
+  </form>
+</view>

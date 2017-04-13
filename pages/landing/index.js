@@ -16,7 +16,7 @@ Page({
      **/
     rest.go({}, wx.login)
       .then(res => res.code)                                                                          // 登录微信, 取code
-      .then(code => rest.go({ method: 'GET', url: urls.getOpenId + code }))                           // 取openid
+      .then(code => rest.go({ method: 'GET', url: urls.openId + code }))                           // 取openid
       .then(res => res.data.openid)                                                                   // 获得openid
       .then(openid => { getApp().globalData.weChatId = openid; return openid })                       // 存openid
       .then(openid => rest.go({ method: 'POST', url: urls.weChatAuth, data: { weChatId: openid } }))  // 验证openid在APM
