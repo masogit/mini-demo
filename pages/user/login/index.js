@@ -1,4 +1,4 @@
-import { rest, native } from '../../../actions/index'
+import { rest } from '../../../actions/index'
 import { urls } from '../../../constants/index'
 
 const app = getApp()
